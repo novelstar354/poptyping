@@ -1,0 +1,135 @@
+<!doctype html>
+<html><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1200">
+<meta name="description" content="（なぜか）タイピングでポップコーンを召喚して、1分間でどれだけ多くのポップコーンを召喚できるかに挑戦するタイピングゲームです。" />
+<title>Popタイピング</title>
+<link href="../css/main.css" rel="stylesheet" type="text/css">
+	
+<link href="../css/base.css" rel="stylesheet" type="text/css">
+<script src="../js/item/item.js"></script>
+	
+<link href="../css/style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="../js/parts.js"></script>
+<link rel="stylesheet" href="../TemplateData/style.css">
+</head>
+
+<body>
+<div id="header"></div>
+<script>header_f();</script>
+<div id="contents">
+  <div id="main">
+    <div id="game">
+      <div id="title">Popタイピング</div>
+      <div class="webgl-content" style="margin: 0px auto 50px auto; width: 650px; height: 600px; overflow:hidden;">
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width="650" height="600"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+
+      var buildUrl = "Build1_1";
+      var loaderUrl = buildUrl + "/Web.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Web.data.gz",
+        frameworkUrl: buildUrl + "/Web.framework.js.gz",
+        codeUrl: buildUrl + "/Web.wasm.gz",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Neutral",
+        productName: "Pop Typing",
+        productVersion: "1.0",
+      };
+
+      config.matchWebGLToCanvasSize = false;
+      config.devicePixelRatio = 1;
+      config.autoSyncPersistentDataPath = true;
+      canvas.style.width = "650px";
+      canvas.style.height = "600px";
+
+      loadingBar.style.display = "block";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+      </div>
+      </div>
+    <div class="info" style="width: 690px; margin-left: 3px; border: 2px dashed #009FAB; box-shadow: 0px 0px 0px 3px #FFFFFF; background-color:#FFF">
+    	<div class="txt">
+    	<h3>★バックアップ機能追加のお知らせ</h3>
+    	<p>
+    		Popタイピングのタイトル画面に「バックアップ」ボタンが追加されました。<br>
+    		詳しくは<a href="info_backup.html" target="_blank"><strong>Popタイピングのバックアップ機能について</strong></a>をご覧ください 
+    	</p></div>
+    </div>
+    <div class="info rule">
+    	<div class="txt">
+    		<h2>Popタイピングとは</h2>
+    		<p>（なぜか）タイピングでポップコーンを召喚して、1分間でどれだけ多くのポップコーンを召喚できるかに挑戦するゲームです。<br>
+    			迅速かつ正確無比なタイピングで『伝説のポップコーンマスター』を目指しましょう。</p>
+    		<div class="note_b"><h3>★高得点のコツは「正確なタイピング」</h3>
+    			ミスをしないでタイプし続けると、召喚レベルが上昇しやすくなり、一度にたくさんのポップコーンを召喚できるようになります。</div>
+    		<h2>ルール</h2>
+    		<ul>
+    			<li>ゲームスタート直後は１回のタイプにつき１粒のポップコーンを召喚しますが、正確にタイプする度に『<strong>経験値</strong>』（画面右側の白いバー）が少しずつ増えていきます。<br>
+    				ミスをしないでタイピングを続けるとボーナスモードになり、１回のタイプで貰える経験値がどんどん増えていきます。ミスをするとボーナスモードは終了します。<br>
+    				<br>
+    				経験値が一番上まで溜まると『<strong>召喚レベル</strong>』が上がり、１回のタイプでより多くのポップコーンを召喚できるようになります。</li>
+    			<li>タイピングを始めてから<strong>１分経過するとゲーム終了</strong>となり、プレイ結果が表示されます。</li>
+    			</ul>
+    		<h2>操作方法</h2>
+    		<ul>
+    			<li>タイトル画面では『クリック』で設定変更、『スペースキー』でスタート。<br>
+    				※タイピング中の操作はキーボードでの入力のみとなります</li>
+    			<li>プレイ中および結果画面で『Escキー』を押すと、タイトル（設定）画面に戻ります。</li>
+    			<li>結果画面で『スペースキー』を押すと同じ設定でゲームをリトライします。</li>
+    			<li>結果画面ではPOSTボタン<img src="../img/tweet.gif" width="24" height="24" alt=""/>」で結果をXにPOSTしたり、「カメラボタン<img src="../img/camera.gif" width="24" height="24" alt=""/>」で結果画面のキャプチャを撮ってJPG画像としてダウンロードすることができます。</li>
+    		</ul>
+    			<div class="note_w">※ゲーム中にAltキーなどを押してしまい、フォーカスが画面から外れて入力できなくなってしまったときは、マウスでゲーム画面をクリックすると入力できるようになります。</div>
+    		</div>
+    </div>
+  </div>
+  <div id="sub">
+  	<div class="abox300">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5774279613524055"
+     crossorigin="anonymous"></script>
+<!-- keyx0_300x600 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:300px;height:600px"
+     data-ad-client="ca-pub-5774279613524055"
+     data-ad-slot="3740809199"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+  	</div>
+  	<div id="popular">
+  		<h2>タイピング　アクセスランキング</h2>
+  		<script type="text/javascript">popular(10);</script>
+  		</div>
+  </div>
+  <div id="page_top"><a href="#top">↑</a></div>
+</div>
+<script type="text/javascript" src="https://keyx0.net/js/item/link/cc.php?p=https://keyx0.net/pop/"></script>
+<div id="footer"></div>
+<script>footer_f();</script>
+</body>
+</html>
